@@ -2,7 +2,7 @@
 Axial-Dataset - v1 2025-05-15 2:43pm
 ==============================
 
-This dataset was exported via roboflow.com on May 15, 2025 at 10:44 AM GMT
+This dataset was exported via roboflow.com on May 15, 2025 at 10:59 AM GMT
 
 Roboflow is an end-to-end computer vision platform that helps you
 * collaborate with your team on computer vision projects
@@ -18,7 +18,7 @@ visit https://github.com/roboflow/notebooks
 To find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com
 
 The dataset includes 371 images.
-Tumor are annotated in YOLOv12 format.
+Tumor are annotated in YOLOv8 format.
 
 The following pre-processing was applied to each image:
 * Auto-orientation of pixel data (with EXIF-orientation stripping)
