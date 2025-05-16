@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import numpy as np
+from ultralytics import YOLO
 
 from util import visualize, set_background
 
@@ -11,7 +12,7 @@ st.header('Please upload an image')
 
 file = st.file_uploader('', type=['png', 'jpg', 'jpeg'])
 
-predictor = ...
+predictor = YOLO('runs/detect/my_custom_yolo_training6/weights/best.pt')
 
 if file:
     image = Image.open(file).convert('RGB')
@@ -20,20 +21,18 @@ if file:
     outputs = predictor(image_array)
 
     threshold = 0.5
+    for result in outputs:
+        scores = result.probs
+        bboxes = result.boxes
 
-    preds = outputs['instances'].pred_classes.tolist()
-    scores = outputs['instances'].scores.tolist()
-    bboxes = outputs['instances'].pred_boxes
+        bboxes_ = []
+        if bboxes and scores:
+            for j, bbox in enumerate(bboxes):
 
-    bboxes_ = []
-    for j, bbox in enumerate(bboxes):
-        bbox = bbox.tolist()
+                score = scores[j]
 
-        score = scores[j]
-        pred = preds[j]
+                if score > threshold:
+                    x1, y1, x2, y2 = [int(i) for i in bbox]
+                    bboxes_.append([x1, y1, x2, y2])
 
-        if score > threshold:
-            x1, y1, x2, y2 = [int(i) for i in bbox]
-            bboxes_.append([x1, y1, x2, y2])
-
-    visualize(image, bboxes_)
+        visualize(image, bboxes_)
